@@ -1,5 +1,8 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using AspNetCoreDatatablePagination.Data;
+
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 
 using System;
 using System.Collections.Generic;
@@ -12,5 +15,16 @@ namespace AspNetCoreDatatablePagination.Controllers
     [ApiController]
     public class DatatablesController : ControllerBase
     {
+        private readonly AspNetCoreDatatableContext _context;
+        public DatatablesController(AspNetCoreDatatableContext context)
+        {
+            _context = context;
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> GetAsync()
+        {
+            return Ok(new { data = await _context.Streets.ToListAsync() });
+        }
     }
 }
