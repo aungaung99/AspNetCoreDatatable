@@ -1,6 +1,9 @@
+using AspNetCoreDatatablePagination.Data;
+
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
@@ -25,6 +28,12 @@ namespace AspNetCoreDatatablePagination
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddRazorPages();
+            services.AddControllers();
+
+            services.AddRouting(options => options.LowercaseUrls = true);
+            services.AddMvc(option => option.EnableEndpointRouting = false);
+
+            services.AddDbContext<AspNetCoreDatatableContext>(options => options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -51,6 +60,14 @@ namespace AspNetCoreDatatablePagination
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapRazorPages();
+            });
+
+            app.UseEndpoints(endpoints =>
+            {
+                endpoints.MapControllerRoute(
+                  name: "api_default",
+                  pattern: "api/{controller=Home}"
+                );
             });
         }
     }

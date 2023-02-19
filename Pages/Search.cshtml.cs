@@ -7,7 +7,7 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 
 namespace AspNetCoreDatatablePagination.Pages
 {
-    public class JQueryModel : PageModel
+    public class SearchModel : PageModel
     {
         public void OnGet()
         {
