@@ -32,6 +32,8 @@ namespace AspNetCoreDatatablePagination.Controllers
         {
             try
             {
+                //await Task.Delay(3000);
+
                 var draw = Request.Form["draw"].FirstOrDefault();
                 var start = Request.Form["start"].FirstOrDefault();
                 var length = Request.Form["length"].FirstOrDefault();

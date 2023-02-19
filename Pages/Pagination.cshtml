@@ -1,6 +1,7 @@
 ﻿@page
 @model AspNetCoreDatatablePagination.Pages.PaginationModel
 @{
+    ViewData["Title"] = "Pagination";
 }
 
 <link href="~/datatables/css/dataTables.bootstrap4.min.css" rel="stylesheet" />
@@ -48,30 +49,39 @@
 <script src="~/js/site.js" asp-append-version="true"></script>
 <script>
     $(document).ready(function () {
-        $('.progress-bar').attr('style', 'width: 0%;');
-
-        setTimeout(() => {
-            $('#example').DataTable({
-                ajax: {
-                    url: '/api/datatables',
-                    type: 'POST',
-                    dataType: 'JSON',
-                    beforeSend: () => { $('.progress-bar').attr('style', 'width: 50%;'); },
-                    complete: (res) => {
-                        $('.progress-bar').attr('style', 'width: 100%;');
-                        setTimeout(() => { $('.progress').remove(); }, 500);
-                    },
+        var table = $('#example').DataTable({
+            ajax: {
+                url: '/api/datatables',
+                type: 'POST',
+                dataType: 'JSON',
+                beforeSend: () => {
+                    $('.progress').show();
+                    $('.progress-bar').attr('style', 'width: 50%;');
                 },
-                serverSide: true,
-                filter: true,
-                columns: [
-                    { data: 'streetId' },
-                    { data: 'streetName' },
-                    { data: 'streetNameMm' },
-                    { data: 'lat' },
-                    { data: 'long' },
-                ],
-            });
-        }, 500);
+                complete: (res) => {
+                    $('.progress-bar').attr('style', 'width: 100%;');
+                    setTimeout(() => { $('.progress-bar').attr('style', 'width: 0%;');  $('.progress').hide(); }, 500);
+                    console.log(res.responseJSON);
+                },
+            },
+            processing: true,
+            serverSide: true,
+            filter: true,
+            columns: [
+                { data: 'streetId' },
+                { data: 'streetName' },
+                { data: 'streetNameMm' },
+                { data: 'lat' },
+                { data: 'long' },
+            ],
+        });
+
+        table.on('xhr.dt', (e, settings, json, xhr) => {
+
+        });
+
+        table.on('length.dt', (e, settings, len) => {
+            console.log(len);
+        });
     });
 </script>
