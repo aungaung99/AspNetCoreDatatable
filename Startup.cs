@@ -28,6 +28,11 @@ namespace AspNetCoreDatatablePagination
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddRazorPages();
+            services.AddControllers();
+
+            services.AddRouting(options => options.LowercaseUrls = true);
+            services.AddMvc(option => option.EnableEndpointRouting = false);
+
             services.AddDbContext<AspNetCoreDatatableContext>(options => options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
         }
 
@@ -55,6 +60,14 @@ namespace AspNetCoreDatatablePagination
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapRazorPages();
+            });
+
+            app.UseEndpoints(endpoints =>
+            {
+                endpoints.MapControllerRoute(
+                  name: "api_default",
+                  pattern: "api/{controller=Home}"
+                );
             });
         }
     }
