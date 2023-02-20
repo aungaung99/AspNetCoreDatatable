@@ -9,7 +9,7 @@
 </head>
 <body class="bg-light">
     <header>
-        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom mb-3">
+        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
             <div class="container">
                 <a class="navbar-brand" asp-area="" asp-page="/Index">AspNetCoreDatatable</a>
                 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".navbar-collapse" aria-controls="navbarSupportedContent"
@@ -43,7 +43,27 @@
             &copy; 2023 - AspNetCoreDatatable - <a asp-area="" asp-page="/Privacy">Privacy</a>
         </div>
     </footer>
+    <script>
+        const runColorMode = (fn) => {
+            if (!window.matchMedia) {
+                return;
+            }
 
+            const query = window.matchMedia('(prefers-color-scheme: dark)');
+
+            fn(query.matches);
+
+            query.addEventListener('change', (event) => fn(event.matches));
+        }
+
+        runColorMode((isDarkMode) => {
+            if (isDarkMode) {
+                //document.body.classList.add('dark-mode');
+            } else {
+                //document.body.classList.remove('dark-mode');
+            }
+        })
+    </script>
 
     @await RenderSectionAsync("Scripts", required: false)
 </body>
