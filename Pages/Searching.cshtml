@@ -87,8 +87,11 @@
             lengthChange: true,
             info: true,
             filter: true,
-            dom: 'tp',
-            processing: true,
+            ordering: false,
+            //dom: "<'row'<'col-sm-12'tr>>" +
+            //    "<'row'<'col-sm-12 col-md-5'i><'col-sm-12 col-md-7 mt-2'p>>",
+            dom: "t" + "<'d-flex justify-content-center'<'mt-2'p>>",
+            processing: false,
             serverSide: true,
             columns: [
                 { data: 'streetId' },
@@ -108,9 +111,9 @@
             table.page.len($('#ddlLengthMenu').val()).draw();
         });
 
-        $('#filterForm').submit((e)=>{
+        $('#filterForm').submit((e) => {
             table.search($('#txtSearch').val()).draw();
-        console.log(e);
+            console.log(e);
         });
     });
 </script>

@@ -1,6 +1,6 @@
 ﻿using AspNetCoreDatatable.Data;
+using AspNetCoreDatatable.Entities;
 
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
@@ -34,29 +34,33 @@ namespace AspNetCoreDatatable.Controllers
         {
             try
             {
-                var draw = Request.Form["draw"].FirstOrDefault();
-                var start = Request.Form["start"].FirstOrDefault();
-                var length = Request.Form["length"].FirstOrDefault();
-                var searchValue = Request.Form["search[value]"].FirstOrDefault();
+                string draw = Request.Form["draw"].FirstOrDefault();
+                string start = Request.Form["start"].FirstOrDefault();
+                string length = Request.Form["length"].FirstOrDefault();
+                string searchValue = Request.Form["search[value]"].FirstOrDefault();
                 int pageSize = length != null ? Convert.ToInt32(length) : 0;
                 int skip = start != null ? Convert.ToInt32(start) : 0;
                 int recordsTotal = 0;
 
-                var userData = (from tempuser in _context.Streets select tempuser);
+                List<Street> streets = new List<Street>();
                 if (!string.IsNullOrEmpty(searchValue))
                 {
-                    userData = userData.Where(m => m.StreetId.ToString().Contains(searchValue)
+                    streets = await _context.Streets.Where(m => m.StreetId.ToString().Contains(searchValue)
                                                 || m.StreetName.Contains(searchValue)
                                                 || m.StreetNameMm.Contains(searchValue)
                                                 || m.Lat.Value.ToString().Contains(searchValue)
-                                                || m.Long.Value.ToString().Contains(searchValue));
+                                                || m.Long.Value.ToString().Contains(searchValue)).ToListAsync();
                 }
-                recordsTotal = userData.Count();
-                var data = pageSize < 0 ? await userData.ToListAsync() : await userData.Skip(skip).Take(pageSize).ToListAsync();
+                else
+                {
+                    streets = await _context.Streets.ToListAsync();
+                }
+                recordsTotal = streets.Count();
+                List<Street> data = pageSize < 0 ? streets : streets.Skip(skip).Take(pageSize).ToList();
                 var jsonData = new { draw, recordsFiltered = recordsTotal, recordsTotal, data };
                 return Ok(jsonData);
             }
-            catch (Exception ex)
+            catch (Exception)
             {
                 return BadRequest();
                 throw;
@@ -68,29 +72,33 @@ namespace AspNetCoreDatatable.Controllers
         {
             try
             {
-                var draw = Request.Form["draw"].FirstOrDefault();
-                var start = Request.Form["start"].FirstOrDefault();
-                var length = Request.Form["length"].FirstOrDefault();
-                var searchValue = Request.Form["search[value]"].FirstOrDefault();
+                string draw = Request.Form["draw"].FirstOrDefault();
+                string start = Request.Form["start"].FirstOrDefault();
+                string length = Request.Form["length"].FirstOrDefault();
+                string searchValue = Request.Form["search[value]"].FirstOrDefault();
                 int pageSize = length != null ? Convert.ToInt32(length) : 0;
                 int skip = start != null ? Convert.ToInt32(start) : 0;
                 int recordsTotal = 0;
 
-                var userData = (from tempuser in _context.Streets select tempuser);
+                List<Street> streets = new List<Street>();
                 if (!string.IsNullOrEmpty(searchValue))
                 {
-                    userData = userData.Where(m => m.StreetId.ToString().Contains(searchValue)
+                    streets = await _context.Streets.Where(m => m.StreetId.ToString().Contains(searchValue)
                                                 || m.StreetName.Contains(searchValue)
                                                 || m.StreetNameMm.Contains(searchValue)
                                                 || m.Lat.Value.ToString().Contains(searchValue)
-                                                || m.Long.Value.ToString().Contains(searchValue));
+                                                || m.Long.Value.ToString().Contains(searchValue)).ToListAsync();
                 }
-                recordsTotal = userData.Count();
-                var data = pageSize < 0 ? await userData.ToListAsync() : await userData.Skip(skip).Take(pageSize).ToListAsync();
+                else
+                {
+                    streets = await _context.Streets.ToListAsync();
+                }
+                recordsTotal = streets.Count();
+                List<Street> data = pageSize < 0 ? streets : streets.Skip(skip).Take(pageSize).ToList();
                 var jsonData = new { draw, recordsFiltered = recordsTotal, recordsTotal, data };
                 return Ok(jsonData);
             }
-            catch (Exception ex)
+            catch (Exception)
             {
                 return BadRequest();
                 throw;
@@ -102,31 +110,41 @@ namespace AspNetCoreDatatable.Controllers
         {
             try
             {
-                var draw = Request.Form["draw"].FirstOrDefault();
-                var start = Request.Form["start"].FirstOrDefault();
-                var length = Request.Form["length"].FirstOrDefault();
-                var sortColumn = Request.Form["columns[" + Request.Form["order[0][column]"].FirstOrDefault() + "][name]"].FirstOrDefault();
-                var sortColumnDirection = Request.Form["order[0][dir]"].FirstOrDefault();
-                var searchValue = Request.Form["search[value]"].FirstOrDefault();
+                string draw = Request.Form["draw"].FirstOrDefault();
+                string start = Request.Form["start"].FirstOrDefault();
+                string length = Request.Form["length"].FirstOrDefault();
+                string sortColumn = Request.Form["columns[" + Request.Form["order[0][column]"].FirstOrDefault() + "][name]"].FirstOrDefault();
+                string sortColumnDirection = Request.Form["order[0][dir]"].FirstOrDefault();
+                string searchValue = Request.Form["search[value]"].FirstOrDefault();
                 int pageSize = length != null ? Convert.ToInt32(length) : 0;
                 int skip = start != null ? Convert.ToInt32(start) : 0;
                 int recordsTotal = 0;
 
-                var userData = (from tempuser in _context.Streets select tempuser);
-                if (!(string.IsNullOrEmpty(sortColumn) && string.IsNullOrEmpty(sortColumnDirection)))
-                {
-                    userData = userData.OrderBy(s => sortColumn + " " + sortColumnDirection);
-                }
+
+                List<Street> streets = new();
                 if (!string.IsNullOrEmpty(searchValue))
                 {
-                    userData = userData.Where(m => m.StreetId.ToString().Contains(searchValue)
+                    streets = await _context.Streets.Where(m => m.StreetId.ToString().Contains(searchValue)
                                                 || m.StreetName.Contains(searchValue)
                                                 || m.StreetNameMm.Contains(searchValue)
                                                 || m.Lat.Value.ToString().Contains(searchValue)
-                                                || m.Long.Value.ToString().Contains(searchValue));
+                                                || m.Long.Value.ToString().Contains(searchValue)).ToListAsync();
                 }
-                recordsTotal = userData.Count();
-                var data = await userData.Skip(skip).Take(pageSize).ToListAsync();
+                else
+                {
+                    streets = await _context.Streets.ToListAsync();
+                }
+
+                if (!(string.IsNullOrEmpty(sortColumn) && string.IsNullOrEmpty(sortColumnDirection)))
+                {
+                    if (sortColumnDirection == "asc")
+                        streets = streets.OrderBy(s => typeof(Street).GetProperty(sortColumn).GetValue(s)).ToList();
+                    else if (sortColumnDirection == "desc")
+                        streets = streets.OrderByDescending(s => typeof(Street).GetProperty(sortColumn).GetValue(s)).ToList();
+                }
+
+                recordsTotal = streets.Count;
+                List<Street> data = pageSize < 0 ? streets : streets.Skip(skip).Take(pageSize).ToList();
                 var jsonData = new { draw, recordsFiltered = recordsTotal, recordsTotal, data };
                 return Ok(jsonData);
             }
