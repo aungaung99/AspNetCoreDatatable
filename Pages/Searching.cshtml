@@ -1,5 +1,5 @@
 ﻿@page
-@model AspNetCoreDatatablePagination.Pages.SearchModel
+@model AspNetCoreDatatable.Pages.SearchingModel
 @{
     ViewData["Title"] = "Pagination";
 }
@@ -16,7 +16,7 @@
     <div class="card-header bg-white">
         <div class="card-title mb-0">
             <h5 class="mb-0">
-                JQuery Datatable pagination
+                JQuery Datatable Custom Search
             </h5>
         </div>
     </div>
@@ -68,7 +68,7 @@
 <script src="~/js/site.js" asp-append-version="true"></script>
 <script>
     $(document).ready(function () {
-        var url = '/api/datatables';
+        var url = '/api/datatables/searching';
         var table = $('#example').DataTable({
             ajax: {
                 url: url,
@@ -87,7 +87,7 @@
             lengthChange: true,
             info: true,
             filter: true,
-            dom: 't',
+            dom: 'tp',
             processing: true,
             serverSide: true,
             columns: [
@@ -114,3 +114,4 @@
         });
     });
 </script>
+
