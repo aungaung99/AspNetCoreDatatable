@@ -1,11 +1,11 @@
 ﻿using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata;
-using AspNetCoreDatatablePagination.Entities;
+using AspNetCoreDatatable.Entities;
 
 #nullable disable
 
-namespace AspNetCoreDatatablePagination.Data
+namespace AspNetCoreDatatable.Data
 {
     public partial class AspNetCoreDatatableContext : DbContext
     {

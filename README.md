@@ -1,2 +1,2 @@
-# AspNetCoreDatatablePagination
+# AspNetCoreDatatable
  Datatable Pagination with API

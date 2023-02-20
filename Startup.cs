@@ -1,4 +1,4 @@
-using AspNetCoreDatatablePagination.Data;
+using AspNetCoreDatatable.Data;
 
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -13,7 +13,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace AspNetCoreDatatablePagination
+namespace AspNetCoreDatatable
 {
     public class Startup
     {

@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.33328.57
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AspNetCoreDatatablePagination", "AspNetCoreDatatablePagination.csproj", "{97B27D22-07B5-4CAE-9D14-DD49588C0B25}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AspNetCoreDatatable", "AspNetCoreDatatable.csproj", "{97B27D22-07B5-4CAE-9D14-DD49588C0B25}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
