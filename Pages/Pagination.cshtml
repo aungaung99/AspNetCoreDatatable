@@ -1,7 +1,7 @@
 ﻿@page
 @model AspNetCoreDatatable.Pages.PaginationModel
 @{
-    ViewData["Title"] = "Pagination";
+    ViewData["Title"] = "Pagination API";
 }
 
 <link href="~/datatables/css/dataTables.bootstrap4.min.css" rel="stylesheet" />
@@ -51,7 +51,7 @@
     $(document).ready(function () {
         var table = $('#example').DataTable({
             ajax: {
-                url: '/api/datatables',
+                url: '/api/datatables/pagination',
                 type: 'POST',
                 dataType: 'JSON',
                 beforeSend: () => {
@@ -60,13 +60,14 @@
                 },
                 complete: (res) => {
                     $('.progress-bar').attr('style', 'width: 100%;');
-                    setTimeout(() => { $('.progress-bar').attr('style', 'width: 0%;');  $('.progress').hide(); }, 500);
+                    setTimeout(() => { $('.progress-bar').attr('style', 'width: 0%;'); $('.progress').hide(); }, 500);
                     console.log(res.responseJSON);
                 },
             },
             processing: true,
             serverSide: true,
             filter: true,
+            ordering: false,
             columns: [
                 { data: 'streetId' },
                 { data: 'streetName' },
