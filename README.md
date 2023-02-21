@@ -36,18 +36,23 @@ https://github.com/aungaung99/AspNetCoreDatatable/blob/ce18778bd53967c27eb82da33
 
 ### jQuery Ajax Server Side Ajax Request
 
-> $('#example').Datatable({
->   ajax: {
->       url : '...',
->       ...
->       ...
->   },
->   serverSide: true,
->   columns: [
->             { data: 'streetId' },
->               { data: 'streetName' },
->               { data: 'streetNameMm' },
->               { data: 'lat' },
->               { data: 'long' },
->           ],
-> });
+'''
+  $('#example').DataTable({
+            ajax: {
+                url: '/api/datatables/pagination',
+                type: 'POST',
+                dataType: 'JSON',
+            },
+            processing: true,
+            serverSide: true,
+            filter: true,
+            ordering: false,
+            columns: [
+                { data: 'streetId' },
+                { data: 'streetName' },
+                { data: 'streetNameMm' },
+                { data: 'lat' },
+                { data: 'long' },
+            ],
+        });
+'''
