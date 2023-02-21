@@ -4,15 +4,14 @@
     ViewData["Title"] = "Pagination";
 }
 
-<link href="~/datatables/css/dataTables.bootstrap4.min.css" rel="stylesheet" />
+<link href="~/datatables.net-bs5/dataTables.bootstrap5.min.css" rel="stylesheet" />
 <style>
     .dataTables_wrapper .dataTables_paginate {
         float: none;
         text-align: center;
     }
 </style>
-<div class="card">
-
+<div class="card shadow-sm">
     <div class="card-header bg-white">
         <div class="card-title mb-0">
             <h5 class="mb-0">
@@ -26,20 +25,30 @@
     </div>
     <div class="card-body">
         <form method="dialog" id="filterForm">
-            <div class="input-group mb-3">
-                <select id="ddlLengthMenu" class="form-control bg-light custom-select col-2">
-                    <option value="25">25 rows</option>
-                    <option value="50">50 rows</option>
-                    <option value="100">100 rows</option>
-                    <option value="-1">All rows</option>
-                </select>
-                <input class="form-control col-10" type="search" id="txtSearch" placeholder="Search anything..." />
-                <div class="input-group-append">
-                    <button class="btn btn-success" type="submit" id="btnSearch">Search</button>
+            <div class="row d-flex justify-content-between mb-3">
+                <div class="col-2">
+                    <div class="input-group">
+                        <label class="input-group-text" for="ddlLengthMenu">Rows</label>
+                        <select id="ddlLengthMenu" class="form-select">
+                            <option value="10">10 rows</option>
+                            <option value="25">25 rows</option>
+                            <option value="50">50 rows</option>
+                            <option value="100">100 rows</option>
+                            <option value="-1">All rows</option>
+                        </select>
+                    </div>
+                    
+                </div>
+                <div class="col-5">
+                    <div class="input-group">
+                        <input class="form-control" type="search" id="txtSearch" placeholder="Search anything..." />
+                        <button class="btn btn-success" type="submit" id="btnSearch">Search</button>
+                    </div>
                 </div>
             </div>
+            
         </form>
-        <table id="example" class="table table-striped table-bordered rounded" style="width:100%;border-radius:10px">
+        <table id="example" class="table table-striped" style="width:100%;border-radius:10px">
             <thead>
                 <tr>
                     <th>Id</th>
@@ -62,7 +71,7 @@
     </div>
 </div>
 <script src="~/lib/jquery/dist/jquery.min.js"></script>
-<script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+<script src="~/bootstrap/js/bootstrap.bundle.min.js"></script>
 <script src="~/datatables/js/jquery.dataTables.min.js"></script>
 <script src="~/datatables/js/dataTables.bootstrap4.min.js"></script>
 <script src="~/js/site.js" asp-append-version="true"></script>
@@ -103,7 +112,8 @@
         });
 
         $('#btnSearch').click(() => {
-            table.search($('#txtSearch').val()).draw();
+            table.columns([1]).search($('#txtSearch').val()).draw();
+            //table.search($('#txtSearch').val()).draw();
         });
 
         $('#ddlLengthMenu').on('change', () => {

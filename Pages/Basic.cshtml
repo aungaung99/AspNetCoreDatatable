@@ -4,9 +4,9 @@
     ViewData["Title"] = "Basic Datatable";
 }
 
-<link href="~/datatables/css/dataTables.bootstrap4.min.css" rel="stylesheet" />
+<link href="~/datatables.net-bs5/dataTables.bootstrap5.css" rel="stylesheet" />
 
-<div class="card box-shadow mt-4">
+<div class="card shadow-sm mt-4">
     <div class="card-header bg-white">
         <div class="card-title mb-0">
             <h5 class="mb-0">
@@ -15,7 +15,7 @@
         </div>
     </div>
     <div class="card-body">
-        <table id="example" class="table table-striped table-bordered rounded" style="width:100%;border-radius:10px">
+        <table id="example" class="table table-striped rounded" style="width:100%;border-radius:10px">
             <thead>
                 <tr>
                     <th>Id</th>
@@ -37,11 +37,7 @@
         </table>
     </div>
 </div>
-<script src="~/lib/jquery/dist/jquery.min.js"></script>
-<script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
-<script src="~/datatables/js/jquery.dataTables.min.js"></script>
-<script src="~/datatables/js/dataTables.bootstrap4.min.js"></script>
-<script src="~/js/site.js" asp-append-version="true"></script>
+<partial name="_VendorScripts" />
 <script>
     $(document).ready(function () {
         $('#example').DataTable({
