@@ -137,7 +137,7 @@ namespace AspNetCoreDatatable.Controllers
                 if (Searching)
                 {
                     //streets = await _context.Streets.Where(CombineWithOr(expressions.ToArray())).ToListAsync();
-                    streets = await _context.Streets.Where(s => typeof(Street).GetProperty("StreetName").GetValue(s).ToString().Contains(Request.Form["search[value]"].FirstOrDefault())).ToListAsync();
+                    //streets = await _context.Streets.Where(s=).ToListAsync();
                 }
                 else
                 {
