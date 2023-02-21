@@ -2,12 +2,7 @@
  Datatable Pagination with API
  This is the jQuery Datatable cus
  
-Some basic Git commands are:
-```
-git status
-git add
-git commit
-```
+> https://github.com/aungaung99/AspNetCoreDatatable/blob/ce18778bd53967c27eb82da3343535b39a1a49e8/Controllers/DatatablesController.cs#L113-L121
  
 ## API Reference
 
