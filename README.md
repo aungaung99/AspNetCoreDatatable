@@ -5,7 +5,6 @@
 ## API Reference
 
 #### Get basic datatables request
-
 ```
   [GET] /api/datatables
 ```
@@ -31,7 +30,7 @@ Datatables draw search value by linq query contain method
 ```
 Datatables sort / order by linq query orderby & orderbydescending method
 
-### Request Form Control from jQuery Datatable Ajax Server side Process
+## Request Form Control from jQuery Datatable Ajax Server side Process
 
 https://github.com/aungaung99/AspNetCoreDatatable/blob/ce18778bd53967c27eb82da3343535b39a1a49e8/Controllers/DatatablesController.cs#L113-L121
 
