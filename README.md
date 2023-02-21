@@ -71,7 +71,7 @@ https://github.com/aungaung99/AspNetCoreDatatable/blob/ce18778bd53967c27eb82da33
 Response JSON Value
 ```json
 [
-    { 'streetId' : '100' } 
+    { "streetId" : "100" } 
 ]
 ```
 
