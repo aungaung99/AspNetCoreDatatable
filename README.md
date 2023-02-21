@@ -36,7 +36,7 @@ https://github.com/aungaung99/AspNetCoreDatatable/blob/ce18778bd53967c27eb82da33
 
 ### jQuery Ajax Server Side Ajax Request
 
-'''javascript
+```javascript
   $('#example').DataTable({
             ajax: {
                 url: '/api/datatables/pagination',
@@ -55,4 +55,4 @@ https://github.com/aungaung99/AspNetCoreDatatable/blob/ce18778bd53967c27eb82da33
                 { data: 'long' },
             ],
         });
-'''
+```
