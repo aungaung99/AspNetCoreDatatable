@@ -35,24 +35,50 @@ Datatables sort / order by linq query orderby & orderbydescending method
 https://github.com/aungaung99/AspNetCoreDatatable/blob/ce18778bd53967c27eb82da3343535b39a1a49e8/Controllers/DatatablesController.cs#L113-L121
 
 ### jQuery Ajax Server Side Ajax Request
+##### This script is only work for pagination and searching. Data ordering doesn't work propably.
 
 ```javascript
   $('#example').DataTable({
-            ajax: {
-                url: '/api/datatables/pagination',
-                type: 'POST',
-                dataType: 'JSON',
-            },
-            processing: true,
-            serverSide: true,
-            filter: true,
-            ordering: false,
-            columns: [
-                { data: 'streetId' },
-                { data: 'streetName' },
-                { data: 'streetNameMm' },
-                { data: 'lat' },
-                { data: 'long' },
-            ],
-        });
+       ajax: {
+           url: '/api/datatables/pagination',
+           type: 'POST',
+           dataType: 'JSON',
+       },
+       processing: true,
+       serverSide: true,
+       filter: true,
+       ordering: false,
+       columns: [
+           { data: 'streetId' },
+           { data: 'streetName' },
+           { data: 'streetNameMm' },
+           { data: 'lat' },
+           { data: 'long' },
+       ],
+});
 ```
+##### So we need to add the column name in this script.
+
+```javascript
+  $('#example').DataTable({
+       ajax: {
+           url: '/api/datatables/pagination',
+           type: 'POST',
+           dataType: 'JSON',
+       },
+       processing: true,
+       serverSide: true,
+       filter: true,
+       ordering: false,
+       columns: [
+           { name: 'StreetId', data: 'streetId' },
+           { name: 'StreetName', data: 'streetName' },
+           { name: 'StreetNameMm', data: 'streetNameMm' },
+           { name: 'Lat', data: 'lat' },
+           { name: 'Long', data: 'long' },
+       ],
+});
+```
+
+
+
