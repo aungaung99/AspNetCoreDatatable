@@ -2,6 +2,13 @@
  Datatable Pagination with API
  This is the jQuery Datatable cus
  
+Some basic Git commands are:
+```
+git status
+git add
+git commit
+```
+ 
 ## API Reference
 
 #### Get basic datatables request
