@@ -37,7 +37,7 @@
                             <option value="-1">All rows</option>
                         </select>
                     </div>
-                    
+
                 </div>
                 <div class="col-5">
                     <div class="input-group">
@@ -46,7 +46,7 @@
                     </div>
                 </div>
             </div>
-            
+
         </form>
         <table id="example" class="table table-striped" style="width:100%;border-radius:10px">
             <thead>
@@ -112,8 +112,7 @@
         });
 
         $('#btnSearch').click(() => {
-            table.columns([1]).search($('#txtSearch').val()).draw();
-            //table.search($('#txtSearch').val()).draw();
+            table.search($('#txtSearch').val()).draw();
         });
 
         $('#ddlLengthMenu').on('change', () => {
