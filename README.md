@@ -40,20 +40,14 @@ https://github.com/aungaung99/AspNetCoreDatatable/blob/ce18778bd53967c27eb82da33
 ```javascript
   $('#example').DataTable({
        ajax: {
-           url: '/api/datatables/pagination',
+           url: '/api/...',
            type: 'POST',
            dataType: 'JSON',
        },
        processing: true,
        serverSide: true,
-       filter: true,
-       ordering: false,
        columns: [
-           { data: 'streetId' },
-           { data: 'streetName' },
-           { data: 'streetNameMm' },
-           { data: 'lat' },
-           { data: 'long' },
+           { data: 'colName' },
        ],
 });
 ```
@@ -68,14 +62,8 @@ https://github.com/aungaung99/AspNetCoreDatatable/blob/ce18778bd53967c27eb82da33
        },
        processing: true,
        serverSide: true,
-       filter: true,
-       ordering: false,
        columns: [
-           { name: 'StreetId', data: 'streetId' },
-           { name: 'StreetName', data: 'streetName' },
-           { name: 'StreetNameMm', data: 'streetNameMm' },
-           { name: 'Lat', data: 'lat' },
-           { name: 'Long', data: 'long' },
+           { name: 'ColName', data: 'colName' },
        ],
 });
 ```
