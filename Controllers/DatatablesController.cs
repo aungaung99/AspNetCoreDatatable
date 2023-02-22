@@ -7,7 +7,9 @@ using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Linq.Expressions;
+using System.Linq.Dynamic.Core;
+using System.Reflection;
+using System.Text;
 using System.Threading.Tasks;
 
 namespace AspNetCoreDatatable.Controllers
@@ -108,6 +110,12 @@ namespace AspNetCoreDatatable.Controllers
         {
             try
             {
+                // Create a config object
+                ParsingConfig config = new ParsingConfig
+                {
+                    UseParameterizedNamesInDynamicQuery = true
+                };
+
                 string draw = Request.Form["draw"].FirstOrDefault();
                 string start = Request.Form["start"].FirstOrDefault();
                 string length = Request.Form["length"].FirstOrDefault();
@@ -119,6 +127,8 @@ namespace AspNetCoreDatatable.Controllers
                 int recordsTotal = 0;
 
                 IQueryable<UserInfo> userInfo = (from dbUserInfo in _context.UserInfos select dbUserInfo);
+                recordsTotal = userInfo.Count();
+
                 if (!string.IsNullOrEmpty(searchValue))
                 {
                     userInfo = userInfo.Where(m => m.Name.Contains(searchValue)
@@ -131,12 +141,8 @@ namespace AspNetCoreDatatable.Controllers
 
                 if (!(string.IsNullOrEmpty(sortColumn) && string.IsNullOrEmpty(sortColumnDirection)))
                 {
-                    if (sortColumnDirection == "asc")
-                        userInfo = userInfo.OrderBy(s => typeof(UserInfo).GetProperty(sortColumn).GetValue(s));
-                    else if (sortColumnDirection == "desc")
-                        userInfo = userInfo.OrderByDescending(s => typeof(UserInfo).GetProperty(sortColumn).GetValue(s));
+                    userInfo = userInfo.OrderBy(sortColumn + " " + sortColumnDirection);
                 }
-                recordsTotal = userInfo.Count();
 
                 List<UserInfo> data = pageSize < 0 ? await userInfo.ToListAsync() : await userInfo.Skip(skip).Take(pageSize).ToListAsync();
                 var jsonData = new { draw, recordsFiltered = recordsTotal, recordsTotal, data };
@@ -156,6 +162,12 @@ namespace AspNetCoreDatatable.Controllers
         {
             try
             {
+                // Create a config object
+                ParsingConfig config = new ParsingConfig
+                {
+                    UseParameterizedNamesInDynamicQuery = true
+                };
+
                 string draw = Request.Form["draw"].FirstOrDefault();
                 string start = Request.Form["start"].FirstOrDefault();
                 string length = Request.Form["length"].FirstOrDefault();
@@ -167,36 +179,53 @@ namespace AspNetCoreDatatable.Controllers
                 int recordsTotal = 0;
 
                 IQueryable<UserInfo> userInfo = (from dbUserInfo in _context.UserInfos select dbUserInfo);
+                recordsTotal = userInfo.Count();
+
+                StringBuilder @condition = new StringBuilder();
+                @condition.Append("u => ");
+                PropertyInfo[] props = typeof(UserInfo).GetProperties();
+                for (int i = 0; i < props.Length; i++)
+                {
+                    if (!string.IsNullOrEmpty(searchValue) && (props[i].Name == "Name" || props[i].Name == "Age" || props[i].Name == "IsActive"))
+                    {
+                        if (props[i].PropertyType != typeof(string))
+                        {
+                            @condition.Append("u.");
+                            @condition.Append(props[i].Name);
+                            @condition.Append(".Value.ToString().Contains(\"" + searchValue + "\") || ");
+                        }
+                        else
+                        {
+                            @condition.Append("u.");
+                            @condition.Append(props[i].Name);
+                            @condition.Append(".Contains(\"" + searchValue + "\") || ");
+                        }
+                    }
+                }
                 if (!string.IsNullOrEmpty(searchValue))
                 {
-                    userInfo = userInfo.Where(m => m.Name.Contains(searchValue)
-                                                || m.Gender.Contains(searchValue)
-                                                || m.EyeColor.Contains(searchValue)
-                                                || m.Email.Contains(searchValue)
-                                                || m.Phone.Contains(searchValue)
-                                                || m.Company.Contains(searchValue));
+                    var whereStr = @condition.ToString().Substring(0, @condition.Length - 4);
+                    userInfo = userInfo.Where(whereStr);
                 }
+
+
+
 
                 if (!(string.IsNullOrEmpty(sortColumn) && string.IsNullOrEmpty(sortColumnDirection)))
                 {
-                    if (sortColumnDirection == "asc")
-                        userInfo = userInfo.OrderBy(s => typeof(UserInfo).GetProperty(sortColumn).GetValue(s));
-                    else if (sortColumnDirection == "desc")
-                        userInfo = userInfo.OrderByDescending(s => typeof(UserInfo).GetProperty(sortColumn).GetValue(s));
+                    userInfo = userInfo.OrderBy(sortColumn + " " + sortColumnDirection);
                 }
-                recordsTotal = userInfo.Count();
 
                 List<UserInfo> data = pageSize < 0 ? await userInfo.ToListAsync() : await userInfo.Skip(skip).Take(pageSize).ToListAsync();
                 var jsonData = new { draw, recordsFiltered = recordsTotal, recordsTotal, data };
                 return Ok(jsonData);
 
             }
-            catch (Exception)
+            catch (Exception ex)
             {
                 return BadRequest();
                 throw;
             }
         }
-
     }
 }
