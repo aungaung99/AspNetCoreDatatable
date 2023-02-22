@@ -4,7 +4,7 @@
     ViewData["Title"] = "Ordering API";
 }
 
-<link href="~/datatables/css/dataTables.bootstrap4.min.css" rel="stylesheet" />
+<link href="~/datatables.net-bs5/dataTables.bootstrap5.css" rel="stylesheet" />
 
 <div class="card">
 
@@ -23,30 +23,32 @@
         <table id="example" class="table table-striped table-bordered rounded" style="width:100%;border-radius:10px">
             <thead>
                 <tr>
-                    <th>Id</th>
-                    <th>Name (EN)</th>
-                    <th>Name (MM)</th>
-                    <th>Lat</th>
-                    <th>Long</th>
+                    <th>Name</th>
+                    <th>Age</th>
+                    <th>Gender</th>
+                    <th>EyeColor</th>
+                    <th>Phone</th>
+                    <th>Email</th>
+                    <th>Company</th>
+                    <th>Active</th>
                 </tr>
             </thead>
             <tfoot>
                 <tr>
-                    <th>Id</th>
-                    <th>Name (EN)</th>
-                    <th>Name (MM)</th>
-                    <th>Lat</th>
-                    <th>Long</th>
+                    <th>Name</th>
+                    <th>Age</th>
+                    <th>Gender</th>
+                    <th>EyeColor</th>
+                    <th>Phone</th>
+                    <th>Email</th>
+                    <th>Company</th>
+                    <th>Active</th>
                 </tr>
             </tfoot>
         </table>
     </div>
 </div>
-<script src="~/lib/jquery/dist/jquery.min.js"></script>
-<script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
-<script src="~/datatables/js/jquery.dataTables.min.js"></script>
-<script src="~/datatables/js/dataTables.bootstrap4.min.js"></script>
-<script src="~/js/site.js" asp-append-version="true"></script>
+<partial name="_VendorScripts" />
 <script>
     $(document).ready(function () {
         var table = $('#example').DataTable({
@@ -68,11 +70,14 @@
             serverSide: true,
             filter: true,
             columns: [
-                { name: 'StreetId', data: 'streetId' },
-                { name: 'StreetName', data: 'streetName' },
-                { name: 'StreetNameMm', data: 'streetNameMm' },
-                { name: 'Lat', data: 'lat' },
-                { name: 'Long', data: 'long' },
+                { name: 'Name', data: 'name' },
+                { name: 'Age', data: 'age' },
+                { name: 'Gender', data: 'gender' },
+                { name: 'eyeColor', data: 'eyeColor' },
+                { name: 'Phone', data: 'phone' },
+                { name: 'Email', data: 'email' },
+                { name: 'Company', data: 'company' },
+                { name: 'IsActive', data: 'isActive' }
             ],
         });
 

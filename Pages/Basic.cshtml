@@ -6,7 +6,7 @@
 
 <link href="~/datatables.net-bs5/dataTables.bootstrap5.css" rel="stylesheet" />
 
-<div class="card shadow-sm mt-4">
+<div class="card mt-4">
     <div class="card-header bg-white">
         <div class="card-title mb-0">
             <h5 class="mb-0">
@@ -18,20 +18,26 @@
         <table id="example" class="table table-striped rounded" style="width:100%;border-radius:10px">
             <thead>
                 <tr>
-                    <th>Id</th>
-                    <th>Name (EN)</th>
-                    <th>Name (MM)</th>
-                    <th>Lat</th>
-                    <th>Long</th>
+                    <th>Name</th>
+                    <th>Age</th>
+                    <th>Gender</th>
+                    <th>EyeColor</th>
+                    <th>Phone</th>
+                    <th>Email</th>
+                    <th>Company</th>
+                    <th>Active</th>
                 </tr>
             </thead>
             <tfoot>
                 <tr>
-                    <th>Id</th>
-                    <th>Name (EN)</th>
-                    <th>Name (MM)</th>
-                    <th>Lat</th>
-                    <th>Long</th>
+                    <th>Name</th>
+                    <th>Age</th>
+                    <th>Gender</th>
+                    <th>EyeColor</th>
+                    <th>Phone</th>
+                    <th>Email</th>
+                    <th>Company</th>
+                    <th>Active</th>
                 </tr>
             </tfoot>
         </table>
@@ -43,11 +49,14 @@
         $('#example').DataTable({
             ajax: '/api/datatables',
             columns: [
-                { data: 'streetId' },
-                { data: 'streetName' },
-                { data: 'streetNameMm' },
-                { data: 'lat' },
-                { data: 'long' },
+                { data: 'name' },
+                { data: 'age' },
+                { data: 'gender' },
+                { data: 'eyeColor' },
+                { data: 'phone' },
+                { data: 'email' },
+                { data: 'company' },
+                { data: 'isActive' }
             ],
         });
     });

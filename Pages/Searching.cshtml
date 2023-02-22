@@ -11,7 +11,7 @@
         text-align: center;
     }
 </style>
-<div class="card shadow-sm">
+<div class="card">
     <div class="card-header bg-white">
         <div class="card-title mb-0">
             <h5 class="mb-0">
@@ -51,30 +51,32 @@
         <table id="example" class="table table-striped" style="width:100%;border-radius:10px">
             <thead>
                 <tr>
-                    <th>Id</th>
-                    <th>Name (EN)</th>
-                    <th>Name (MM)</th>
-                    <th>Lat</th>
-                    <th>Long</th>
+                    <th>Name</th>
+                    <th>Age</th>
+                    <th>Gender</th>
+                    <th>EyeColor</th>
+                    <th>Phone</th>
+                    <th>Email</th>
+                    <th>Company</th>
+                    <th>Active</th>
                 </tr>
             </thead>
             <tfoot>
                 <tr>
-                    <th>Id</th>
-                    <th>Name (EN)</th>
-                    <th>Name (MM)</th>
-                    <th>Lat</th>
-                    <th>Long</th>
+                    <th>Name</th>
+                    <th>Age</th>
+                    <th>Gender</th>
+                    <th>EyeColor</th>
+                    <th>Phone</th>
+                    <th>Email</th>
+                    <th>Company</th>
+                    <th>Active</th>
                 </tr>
             </tfoot>
         </table>
     </div>
 </div>
-<script src="~/lib/jquery/dist/jquery.min.js"></script>
-<script src="~/bootstrap/js/bootstrap.bundle.min.js"></script>
-<script src="~/datatables/js/jquery.dataTables.min.js"></script>
-<script src="~/datatables/js/dataTables.bootstrap4.min.js"></script>
-<script src="~/js/site.js" asp-append-version="true"></script>
+<partial name="_VendorScripts" />
 <script>
     $(document).ready(function () {
         var url = '/api/datatables/searching';
@@ -103,11 +105,14 @@
             processing: false,
             serverSide: true,
             columns: [
-                { data: 'streetId' },
-                { data: 'streetName' },
-                { data: 'streetNameMm' },
-                { data: 'lat' },
-                { data: 'long' },
+                { data: 'name' },
+                { data: 'age' },
+                { data: 'gender' },
+                { data: 'eyeColor' },
+                { data: 'phone' },
+                { data: 'email' },
+                { data: 'company' },
+                { data: 'isActive' }
             ],
         });
 
