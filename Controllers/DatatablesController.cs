@@ -26,7 +26,7 @@ namespace AspNetCoreDatatable.Controllers
         [HttpGet]
         public async Task<IActionResult> GetAsync()
         {
-            return Ok(new { data = await _context.Streets.ToListAsync() });
+            return Ok(new { data = await _context.UserInfos.ToListAsync() });
         }
 
         // Pagination
@@ -43,26 +43,24 @@ namespace AspNetCoreDatatable.Controllers
                 int skip = start != null ? Convert.ToInt32(start) : 0;
                 int recordsTotal = 0;
 
-                List<Street> streets = new List<Street>();
+                IQueryable<UserInfo> userInfo = (from dbuserinfo in _context.UserInfos select dbuserinfo);
                 if (!string.IsNullOrEmpty(searchValue))
                 {
-                    streets = await _context.Streets.Where(m => m.StreetId.ToString().Contains(searchValue)
-                                                || m.StreetName.Contains(searchValue)
-                                                || m.StreetNameMm.Contains(searchValue)
-                                                || m.Lat.Value.ToString().Contains(searchValue)
-                                                || m.Long.Value.ToString().Contains(searchValue)).ToListAsync();
+                    userInfo = userInfo.Where(m => m.Name.Contains(searchValue)
+                                                || m.Gender.Contains(searchValue)
+                                                || m.EyeColor.Contains(searchValue)
+                                                || m.Email.Contains(searchValue)
+                                                || m.Phone.Contains(searchValue)
+                                                || m.Company.Contains(searchValue));
                 }
-                else
-                {
-                    streets = await _context.Streets.ToListAsync();
-                }
-                recordsTotal = streets.Count();
-                List<Street> data = pageSize < 0 ? streets : streets.Skip(skip).Take(pageSize).ToList();
-                var jsonData = new { draw, recordsFiltered = recordsTotal, recordsTotal, data };
-                return Ok(jsonData);
+
+                recordsTotal = userInfo.Count();
+                List<UserInfo> data = pageSize < 0 ? await userInfo.ToListAsync() : await userInfo.Skip(skip).Take(pageSize).ToListAsync();
+                return Ok(new { draw, recordsFiltered = recordsTotal, recordsTotal, data });
             }
-            catch (Exception)
+            catch (Exception ex)
             {
+                Console.WriteLine(ex.Message);
                 return BadRequest();
                 throw;
             }
@@ -82,75 +80,22 @@ namespace AspNetCoreDatatable.Controllers
                 int skip = start != null ? Convert.ToInt32(start) : 0;
                 int recordsTotal = 0;
 
-                List<Street> streets = new List<Street>();
+                IQueryable<UserInfo> userInfo = (from dbuserinfo in _context.UserInfos select dbuserinfo);
                 if (!string.IsNullOrEmpty(searchValue))
                 {
-                    streets = await _context.Streets.Where(m => m.StreetId.ToString().Contains(searchValue)
-                                                || m.StreetName.Contains(searchValue)
-                                                || m.StreetNameMm.Contains(searchValue)
-                                                || m.Lat.Value.ToString().Contains(searchValue)
-                                                || m.Long.Value.ToString().Contains(searchValue)).ToListAsync();
+                    userInfo = userInfo.Where(m => m.Name.Contains(searchValue)
+                                                || m.Gender.Contains(searchValue)
+                                                || m.EyeColor.Contains(searchValue)
+                                                || m.Email.Contains(searchValue)
+                                                || m.Phone.Contains(searchValue)
+                                                || m.Company.Contains(searchValue));
                 }
-                else
-                {
-                    streets = await _context.Streets.ToListAsync();
-                }
-                recordsTotal = streets.Count();
-                List<Street> data = pageSize < 0 ? streets : streets.Skip(skip).Take(pageSize).ToList();
-                var jsonData = new { draw, recordsFiltered = recordsTotal, recordsTotal, data };
-                return Ok(jsonData);
+
+                recordsTotal = userInfo.Count();
+                List<UserInfo> data = pageSize < 0 ? await userInfo.ToListAsync() : await userInfo.Skip(skip).Take(pageSize).ToListAsync();
+                return Ok(new { draw, recordsFiltered = recordsTotal, recordsTotal, data });
             }
             catch (Exception)
-            {
-                return BadRequest();
-                throw;
-            }
-        }
-
-        // Custom Searching
-        [HttpPost("column-searching")]
-        public async Task<IActionResult> PostColumnSearchingAsync()
-        {
-            try
-            {
-                bool Searching = false;
-                List<Expression<Func<Street, bool>>> expressions = new();
-                System.Reflection.PropertyInfo[] props = typeof(Street).GetProperties();
-                for (int i = 0; i < props.Length; i++)
-                {
-                    string colName = Request.Form["columns[" + i + "][name]"].FirstOrDefault();
-                    string searchValue = Request.Form["columns[" + i + "][search][value]"].FirstOrDefault();
-                    if (!string.IsNullOrEmpty(searchValue))
-                    {
-                        Expression<Func<Street, bool>> expression = s => typeof(Street).GetProperty(colName).GetValue(s).ToString().Contains(searchValue);
-                        expressions.Add(expression);
-                        Searching = true;
-                    }
-                }
-
-                string draw = Request.Form["draw"].FirstOrDefault();
-                string start = Request.Form["start"].FirstOrDefault();
-                string length = Request.Form["length"].FirstOrDefault();
-                int pageSize = length != null ? Convert.ToInt32(length) : 0;
-                int skip = start != null ? Convert.ToInt32(start) : 0;
-                int recordsTotal = 0;
-
-                List<Street> streets = new();
-                if (Searching)
-                {
-                    //streets = await _context.Streets.Where(CombineWithOr(expressions.ToArray())).ToListAsync();
-                    //streets = await _context.Streets.Where(s=).ToListAsync();
-                }
-                else
-                {
-                    streets = await _context.Streets.ToListAsync();
-                }
-                recordsTotal = streets.Count();
-                List<Street> data = pageSize < 0 ? streets : streets.Skip(skip).Take(pageSize).ToList();
-                var jsonData = new { draw, recordsFiltered = recordsTotal, recordsTotal, data };
-                return Ok(jsonData);
-            }
-            catch (Exception ex)
             {
                 return BadRequest();
                 throw;
@@ -173,33 +118,30 @@ namespace AspNetCoreDatatable.Controllers
                 int skip = start != null ? Convert.ToInt32(start) : 0;
                 int recordsTotal = 0;
 
-
-                List<Street> streets = new();
+                IQueryable<UserInfo> userInfo = (from dbUserInfo in _context.UserInfos select dbUserInfo);
                 if (!string.IsNullOrEmpty(searchValue))
                 {
-                    streets = await _context.Streets.Where(m => m.StreetId.ToString().Contains(searchValue)
-                                                || m.StreetName.Contains(searchValue)
-                                                || m.StreetNameMm.Contains(searchValue)
-                                                || m.Lat.Value.ToString().Contains(searchValue)
-                                                || m.Long.Value.ToString().Contains(searchValue)).ToListAsync();
-                }
-                else
-                {
-                    streets = await _context.Streets.ToListAsync();
+                    userInfo = userInfo.Where(m => m.Name.Contains(searchValue)
+                                                || m.Gender.Contains(searchValue)
+                                                || m.EyeColor.Contains(searchValue)
+                                                || m.Email.Contains(searchValue)
+                                                || m.Phone.Contains(searchValue)
+                                                || m.Company.Contains(searchValue));
                 }
 
                 if (!(string.IsNullOrEmpty(sortColumn) && string.IsNullOrEmpty(sortColumnDirection)))
                 {
                     if (sortColumnDirection == "asc")
-                        streets = streets.OrderBy(s => typeof(Street).GetProperty(sortColumn).GetValue(s)).ToList();
+                        userInfo = userInfo.OrderBy(s => typeof(UserInfo).GetProperty(sortColumn).GetValue(s));
                     else if (sortColumnDirection == "desc")
-                        streets = streets.OrderByDescending(s => typeof(Street).GetProperty(sortColumn).GetValue(s)).ToList();
+                        userInfo = userInfo.OrderByDescending(s => typeof(UserInfo).GetProperty(sortColumn).GetValue(s));
                 }
+                recordsTotal = userInfo.Count();
 
-                recordsTotal = streets.Count;
-                List<Street> data = pageSize < 0 ? streets : streets.Skip(skip).Take(pageSize).ToList();
+                List<UserInfo> data = pageSize < 0 ? await userInfo.ToListAsync() : await userInfo.Skip(skip).Take(pageSize).ToListAsync();
                 var jsonData = new { draw, recordsFiltered = recordsTotal, recordsTotal, data };
                 return Ok(jsonData);
+
             }
             catch (Exception)
             {
@@ -208,37 +150,53 @@ namespace AspNetCoreDatatable.Controllers
             }
         }
 
-        public static Expression<Func<T, bool>> CombineWithOr<T>(params Expression<Func<T, bool>>[] filters)
+        // All IN One
+        [HttpPost("AIO")]
+        public async Task<IActionResult> PostAIOAsync()
         {
-            Expression<Func<T, bool>> first = filters.First();
-            ParameterExpression param = first.Parameters.First();
-            Expression body = first.Body;
-
-            foreach (Expression<Func<T, bool>> other in filters.Skip(1))
+            try
             {
-                ReplaceParameter replacer = new ReplaceParameter
+                string draw = Request.Form["draw"].FirstOrDefault();
+                string start = Request.Form["start"].FirstOrDefault();
+                string length = Request.Form["length"].FirstOrDefault();
+                string sortColumn = Request.Form["columns[" + Request.Form["order[0][column]"].FirstOrDefault() + "][name]"].FirstOrDefault();
+                string sortColumnDirection = Request.Form["order[0][dir]"].FirstOrDefault();
+                string searchValue = Request.Form["search[value]"].FirstOrDefault();
+                int pageSize = length != null ? Convert.ToInt32(length) : 0;
+                int skip = start != null ? Convert.ToInt32(start) : 0;
+                int recordsTotal = 0;
+
+                IQueryable<UserInfo> userInfo = (from dbUserInfo in _context.UserInfos select dbUserInfo);
+                if (!string.IsNullOrEmpty(searchValue))
                 {
-                    OriginalParameter = other.Parameters.First(),
-                    NewParameter = param
-                };
-                // We need to replace the original expression parameter with the result parameter
-                body = Expression.Or(body, replacer.Visit(other.Body));
+                    userInfo = userInfo.Where(m => m.Name.Contains(searchValue)
+                                                || m.Gender.Contains(searchValue)
+                                                || m.EyeColor.Contains(searchValue)
+                                                || m.Email.Contains(searchValue)
+                                                || m.Phone.Contains(searchValue)
+                                                || m.Company.Contains(searchValue));
+                }
+
+                if (!(string.IsNullOrEmpty(sortColumn) && string.IsNullOrEmpty(sortColumnDirection)))
+                {
+                    if (sortColumnDirection == "asc")
+                        userInfo = userInfo.OrderBy(s => typeof(UserInfo).GetProperty(sortColumn).GetValue(s));
+                    else if (sortColumnDirection == "desc")
+                        userInfo = userInfo.OrderByDescending(s => typeof(UserInfo).GetProperty(sortColumn).GetValue(s));
+                }
+                recordsTotal = userInfo.Count();
+
+                List<UserInfo> data = pageSize < 0 ? await userInfo.ToListAsync() : await userInfo.Skip(skip).Take(pageSize).ToListAsync();
+                var jsonData = new { draw, recordsFiltered = recordsTotal, recordsTotal, data };
+                return Ok(jsonData);
+
             }
-
-            return Expression.Lambda<Func<T, bool>>(
-                body,
-                param
-            );
-        }
-
-        private class ReplaceParameter : ExpressionVisitor
-        {
-            public Expression OriginalParameter { get; set; }
-            public Expression NewParameter { get; set; }
-            protected override Expression VisitParameter(ParameterExpression node)
+            catch (Exception)
             {
-                return node == OriginalParameter ? NewParameter : base.VisitParameter(node);
+                return BadRequest();
+                throw;
             }
         }
+
     }
 }

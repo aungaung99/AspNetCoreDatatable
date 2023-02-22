@@ -7,7 +7,7 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 
 namespace AspNetCoreDatatable.Pages
 {
-    public class ColumnSearchingModel : PageModel
+    public class AIOModel : PageModel
     {
         public void OnGet()
         {

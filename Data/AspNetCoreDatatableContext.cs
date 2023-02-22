@@ -19,6 +19,7 @@ namespace AspNetCoreDatatable.Data
         }
 
         public virtual DbSet<Street> Streets { get; set; }
+        public virtual DbSet<UserInfo> UserInfos { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {

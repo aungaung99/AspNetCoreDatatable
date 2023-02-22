@@ -23,20 +23,26 @@
         <table id="example" class="table table-striped" style="width:100%;border-radius:10px">
             <thead>
                 <tr>
-                    <th>Id</th>
-                    <th>Name (EN)</th>
-                    <th>Name (MM)</th>
-                    <th>Lat</th>
-                    <th>Long</th>
+                    <th>Name</th>
+                    <th>Age</th>
+                    <th>Gender</th>
+                    <th>EyeColor</th>
+                    <th>Phone</th>
+                    <th>Email</th>
+                    <th>Company</th>
+                    <th>Active</th>
                 </tr>
             </thead>
             <tfoot>
                 <tr>
-                    <th>Id</th>
-                    <th>Name (EN)</th>
-                    <th>Name (MM)</th>
-                    <th>Lat</th>
-                    <th>Long</th>
+                    <th>Name</th>
+                    <th>Age</th>
+                    <th>Gender</th>
+                    <th>EyeColor</th>
+                    <th>Phone</th>
+                    <th>Email</th>
+                    <th>Company</th>
+                    <th>Active</th>
                 </tr>
             </tfoot>
         </table>
@@ -62,14 +68,17 @@
             },
             processing: true,
             serverSide: true,
-            filter: true,
+            filter: false,
             ordering: false,
             columns: [
-                { data: 'streetId' },
-                { data: 'streetName' },
-                { data: 'streetNameMm' },
-                { data: 'lat' },
-                { data: 'long' },
+                { data: 'name' },
+                { data: 'age' },
+                { data: 'gender' },
+                { data: 'eyeColor' },
+                { data: 'phone' },
+                { data: 'email' },
+                { data: 'company' },
+                { data: 'isActive' }
             ],
         });
 
