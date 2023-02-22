@@ -1,0 +1,54 @@
+﻿@page
+@model AspNetCoreDatatable.Pages.BasicModel
+@{
+    ViewData["Title"] = "Basic Datatable";
+}
+
+<link href="~/datatables.net-bs5/dataTables.bootstrap5.css" rel="stylesheet" />
+
+<div class="card shadow-sm mt-4">
+    <div class="card-header bg-white">
+        <div class="card-title mb-0">
+            <h5 class="mb-0">
+                JQuery Basic Datatable
+            </h5>
+        </div>
+    </div>
+    <div class="card-body">
+        <table id="example" class="table table-striped rounded" style="width:100%;border-radius:10px">
+            <thead>
+                <tr>
+                    <th>Id</th>
+                    <th>Name (EN)</th>
+                    <th>Name (MM)</th>
+                    <th>Lat</th>
+                    <th>Long</th>
+                </tr>
+            </thead>
+            <tfoot>
+                <tr>
+                    <th>Id</th>
+                    <th>Name (EN)</th>
+                    <th>Name (MM)</th>
+                    <th>Lat</th>
+                    <th>Long</th>
+                </tr>
+            </tfoot>
+        </table>
+    </div>
+</div>
+<partial name="_VendorScripts" />
+<script>
+    $(document).ready(function () {
+        $('#example').DataTable({
+            ajax: '/api/datatables',
+            columns: [
+                { data: 'streetId' },
+                { data: 'streetName' },
+                { data: 'streetNameMm' },
+                { data: 'lat' },
+                { data: 'long' },
+            ],
+        });
+    });
+</script>

@@ -5,6 +5,15 @@
     {
       "library": "datatables@1.10.21",
       "destination": "wwwroot/datatables/"
+    },
+    {
+      "library": "bootstrap@5.2.3",
+      "destination": "wwwroot/bootstrap/"
     }
-  ]
+  ,
+{
+  "library": "datatables.net-bs5@1.13.2",
+  "destination": "wwwroot/datatables.net-bs5/"
+}
+]
 }
