@@ -68,6 +68,7 @@ namespace AspNetCoreDatatable.Controllers
             }
         }
 
+        // Searching
         [HttpPost("searching")]
         public async Task<IActionResult> PostSearchingAsync()
         {
@@ -106,6 +107,7 @@ namespace AspNetCoreDatatable.Controllers
             }
         }
 
+        // Custom Searching
         [HttpPost("column-searching")]
         public async Task<IActionResult> PostColumnSearchingAsync()
         {
@@ -155,6 +157,7 @@ namespace AspNetCoreDatatable.Controllers
             }
         }
 
+        // Ordering
         [HttpPost("ordering")]
         public async Task<IActionResult> PostOrderingAsync()
         {
