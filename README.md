@@ -39,20 +39,54 @@ Datatables sort / order by linq query orderby & orderbydescending method
 [HttpPost]
 public async Task<IActionResult> OnPostAsync()
 {
-    string draw = Request.Form["draw"].FirstOrDefault(); 
-    string start = Request.Form["start"].FirstOrDefault(); 
-    string length = Request.Form["length"].FirstOrDefault(); 
-    string sortColumn = Request.Form["columns[" + Request.Form["order[0][column]"].FirstOrDefault() + "][name]"].FirstOrDefault(); 
-    string sortColumnDirection = Request.Form["order[0][dir]"].FirstOrDefault(); 
-    string searchValue = Request.Form["search[value]"].FirstOrDefault(); 
-    int pageSize = length != null ? Convert.ToInt32(length) : 0; 
-    int skip = start != null ? Convert.ToInt32(start) : 0; 
-    int recordsTotal = 0;
-    
+   try
+   {
+       // Create a config object
+       ParsingConfig config = new ParsingConfig
+       {
+           UseParameterizedNamesInDynamicQuery = true
+       };
+
+       string draw = Request.Form["draw"].FirstOrDefault();
+       string start = Request.Form["start"].FirstOrDefault();
+       string length = Request.Form["length"].FirstOrDefault();
+       string sortColumn = Request.Form["columns[" + Request.Form["order[0][column]"].FirstOrDefault() + "][name]"].FirstOrDefault();
+       string sortColumnDirection = Request.Form["order[0][dir]"].FirstOrDefault();
+       string searchValue = Request.Form["search[value]"].FirstOrDefault();
+       int pageSize = length != null ? Convert.ToInt32(length) : 0;
+       int skip = start != null ? Convert.ToInt32(start) : 0;
+       int recordsTotal = 0;
+
+       IQueryable<UserInfo> userInfo = (from dbUserInfo in _context.UserInfos select dbUserInfo);
+       recordsTotal = userInfo.Count();
+
+       if (!string.IsNullOrEmpty(searchValue))
+       {
+           userInfo = userInfo.Where(m => m.Name.Contains(searchValue)
+                                       || m.Gender.Contains(searchValue)
+                                       || m.EyeColor.Contains(searchValue)
+                                       || m.Email.Contains(searchValue)
+                                       || m.Phone.Contains(searchValue)
+                                       || m.Company.Contains(searchValue));
+       }
+
+       if (!(string.IsNullOrEmpty(sortColumn) && string.IsNullOrEmpty(sortColumnDirection)))
+       {
+           userInfo = userInfo.OrderBy(sortColumn + " " + sortColumnDirection);
+       }
+
+       List<UserInfo> data = pageSize < 0 ? await userInfo.ToListAsync() : await userInfo.Skip(skip).Take(pageSize).ToListAsync();
+       var jsonData = new { draw, recordsFiltered = recordsTotal, recordsTotal, data };
+       return Ok(jsonData);
+
+   }
+   catch (Exception)
+   {
+       return BadRequest();
+       throw;
+   }
 }
 ```
-
-### Read More https://github.com/aungaung99/AspNetCoreDatatable/blob/79de708e6409e6453d750e66a1e0c042004af9d5/Controllers/DatatablesController.cs#L48
 
 ### jQuery Ajax Server Side Ajax Request
 ##### This script is only work for pagination and searching but data ordering doesn't work propably.
