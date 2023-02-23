@@ -1,0 +1,126 @@
+﻿@page
+@model AspNetCoreDatatable.Pages.AIOModel
+@{
+    ViewData["Title"] = "All In One";
+}
+
+<link href="~/datatables.net-bs5/dataTables.bootstrap5.css" rel="stylesheet" />
+<style>
+    .paginate_button {
+        margin-right: 10px;
+    }
+
+        .paginate_button a {
+            border-radius: 20px 20px;
+        }
+</style>
+<div class="card">
+
+    <div class="card-header bg-white">
+        <div class="card-title mb-0">
+            <h5 class="mb-0">
+                JQuery Datatable Ordering
+            </h5>
+        </div>
+    </div>
+    <div class="progress rounded-0" style="height:3px">
+        <div class="progress-bar" role="progressbar" style="width: 0%;height:3px" aria-
+             valuenow="0" aria-valuemin="0" aria-valuemax="100"></div>
+    </div>
+    <div class="card-body">
+        <form method="dialog" id="filterForm">
+            <div class="row d-flex justify-content-between mb-2">
+                <div class="col-5 ms-auto">
+                    <div class="input-group">
+                        <input class="form-control" type="search" id="txtSearch" placeholder="Search anything..." />
+                        <button class="btn btn-primary" type="submit" id="btnSearch">Search</button>
+                    </div>
+                </div>
+            </div>
+
+        </form>
+        <table id="example" class="table table-striped table-light" style="width:100%;border-radius:10px">
+            <thead>
+                <tr>
+                    <th>Name</th>
+                    <th>Age</th>
+                    <th>Gender</th>
+                    <th>EyeColor</th>
+                    <th>Phone</th>
+                    <th>Email</th>
+                    <th>Company</th>
+                    <th>Active</th>
+                </tr>
+            </thead>
+            <tfoot>
+                <tr>
+                    <th>Name</th>
+                    <th>Age</th>
+                    <th>Gender</th>
+                    <th>EyeColor</th>
+                    <th>Phone</th>
+                    <th>Email</th>
+                    <th>Company</th>
+                    <th>Active</th>
+                </tr>
+            </tfoot>
+        </table>
+    </div>
+</div>
+<partial name="_VendorScripts" />
+<script>
+    $(document).ready(function () {
+        var table = $('#example').DataTable({
+            ajax: {
+                url: '/api/datatables/aio',
+                type: 'POST',
+                dataType: 'JSON',
+                beforeSend: () => {
+                    $('.progress').show();
+                    $('.progress-bar').attr('style', 'width: 50%;');
+                },
+                complete: (res) => {
+                    $('.progress-bar').attr('style', 'width: 100%;');
+                    setTimeout(() => { $('.progress-bar').attr('style', 'width: 0%;'); $('.progress').hide(); }, 500);
+                    console.log(res.responseJSON);
+                },
+            },
+            dom: "<'row'<'col-sm-12'tr>>" +
+                "<'row d-flex justify-content-between'<'col-auto'p><'col-auto float-end mt-2'l>>",
+            initComplete: () => {
+                //console.log($(table).find('example_length'));
+            },
+            pagingType: 'numbers',
+            processing: true,
+            serverSide: true,
+            filter: true,
+            columns: [
+                { name: 'Name', data: 'name' },
+                { name: 'Age', data: 'age' },
+                { name: 'Gender', data: 'gender' },
+                { name: 'eyeColor', data: 'eyeColor' },
+                { name: 'Phone', data: 'phone' },
+                { name: 'Email', data: 'email' },
+                { name: 'Company', data: 'company' },
+                { name: 'IsActive', data: 'isActive' }
+            ],
+        });
+
+        table.on('xhr.dt', (e, settings, json, xhr) => {
+
+        });
+
+        table.on('length.dt', (e, settings, len) => {
+            console.log(len);
+        });
+
+        $('#btnSearch').click(() => {
+            table.search($('#txtSearch').val()).draw();
+        });
+
+        $('#filterForm').submit((e) => {
+            table.search($('#txtSearch').val()).draw();
+            console.log(e);
+        });
+    });
+</script>

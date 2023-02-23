@@ -1,0 +1,63 @@
+﻿@page
+@model AspNetCoreDatatable.Pages.BasicModel
+@{
+    ViewData["Title"] = "Basic Datatable";
+}
+
+<link href="~/datatables.net-bs5/dataTables.bootstrap5.css" rel="stylesheet" />
+
+<div class="card mt-4">
+    <div class="card-header bg-white">
+        <div class="card-title mb-0">
+            <h5 class="mb-0">
+                JQuery Basic Datatable
+            </h5>
+        </div>
+    </div>
+    <div class="card-body">
+        <table id="example" class="table table-striped rounded" style="width:100%;border-radius:10px">
+            <thead>
+                <tr>
+                    <th>Name</th>
+                    <th>Age</th>
+                    <th>Gender</th>
+                    <th>EyeColor</th>
+                    <th>Phone</th>
+                    <th>Email</th>
+                    <th>Company</th>
+                    <th>Active</th>
+                </tr>
+            </thead>
+            <tfoot>
+                <tr>
+                    <th>Name</th>
+                    <th>Age</th>
+                    <th>Gender</th>
+                    <th>EyeColor</th>
+                    <th>Phone</th>
+                    <th>Email</th>
+                    <th>Company</th>
+                    <th>Active</th>
+                </tr>
+            </tfoot>
+        </table>
+    </div>
+</div>
+<partial name="_VendorScripts" />
+<script>
+    $(document).ready(function () {
+        $('#example').DataTable({
+            ajax: '/api/datatables',
+            columns: [
+                { data: 'name' },
+                { data: 'age' },
+                { data: 'gender' },
+                { data: 'eyeColor' },
+                { data: 'phone' },
+                { data: 'email' },
+                { data: 'company' },
+                { data: 'isActive' }
+            ],
+        });
+    });
+</script>

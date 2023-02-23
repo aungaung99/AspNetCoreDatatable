@@ -1,0 +1,134 @@
+﻿@page
+@model AspNetCoreDatatable.Pages.SearchingModel
+@{
+    ViewData["Title"] = "Pagination";
+}
+
+<link href="~/datatables.net-bs5/dataTables.bootstrap5.min.css" rel="stylesheet" />
+<style>
+    .dataTables_wrapper .dataTables_paginate {
+        float: none;
+        text-align: center;
+    }
+</style>
+<div class="card">
+    <div class="card-header bg-white">
+        <div class="card-title mb-0">
+            <h5 class="mb-0">
+                JQuery Datatable Custom Search
+            </h5>
+        </div>
+    </div>
+    <div class="progress rounded-0" style="height:3px">
+        <div class="progress-bar" role="progressbar" style="width: 0%;height:3px" aria-
+             valuenow="0" aria-valuemin="0" aria-valuemax="100"></div>
+    </div>
+    <div class="card-body">
+        <form method="dialog" id="filterForm">
+            <div class="row d-flex justify-content-between mb-3">
+                <div class="col-2">
+                    <div class="input-group">
+                        <label class="input-group-text" for="ddlLengthMenu">Rows</label>
+                        <select id="ddlLengthMenu" class="form-select">
+                            <option value="10">10 rows</option>
+                            <option value="25">25 rows</option>
+                            <option value="50">50 rows</option>
+                            <option value="100">100 rows</option>
+                            <option value="-1">All rows</option>
+                        </select>
+                    </div>
+
+                </div>
+                <div class="col-5">
+                    <div class="input-group">
+                        <input class="form-control" type="search" id="txtSearch" placeholder="Search anything..." />
+                        <button class="btn btn-success" type="submit" id="btnSearch">Search</button>
+                    </div>
+                </div>
+            </div>
+
+        </form>
+        <table id="example" class="table table-striped" style="width:100%;border-radius:10px">
+            <thead>
+                <tr>
+                    <th>Name</th>
+                    <th>Age</th>
+                    <th>Gender</th>
+                    <th>EyeColor</th>
+                    <th>Phone</th>
+                    <th>Email</th>
+                    <th>Company</th>
+                    <th>Active</th>
+                </tr>
+            </thead>
+            <tfoot>
+                <tr>
+                    <th>Name</th>
+                    <th>Age</th>
+                    <th>Gender</th>
+                    <th>EyeColor</th>
+                    <th>Phone</th>
+                    <th>Email</th>
+                    <th>Company</th>
+                    <th>Active</th>
+                </tr>
+            </tfoot>
+        </table>
+    </div>
+</div>
+<partial name="_VendorScripts" />
+<script>
+    $(document).ready(function () {
+        var url = '/api/datatables/searching';
+        var table = $('#example').DataTable({
+            ajax: {
+                url: url,
+                type: 'POST',
+                dataType: 'JSON',
+                beforeSend: () => {
+                    $('.progress').show();
+                    $('.progress-bar').attr('style', 'width: 50%;');
+                },
+                complete: (res) => {
+                    $('.progress-bar').attr('style', 'width: 100%;');
+                    setTimeout(() => { $('.progress-bar').attr('style', 'width: 0%;'); $('.progress').hide(); }, 500);
+                    console.log(res.responseJSON);
+                },
+            },
+            lengthChange: true,
+            info: true,
+            filter: true,
+            ordering: false,
+            //dom: "<'row'<'col-sm-12'tr>>" +
+            //    "<'row'<'col-sm-12 col-md-5'i><'col-sm-12 col-md-7 mt-2'p>>",
+            dom: "t" + "<'d-flex justify-content-center'<'mt-2'p>>",
+            processing: false,
+            serverSide: true,
+            columns: [
+                { data: 'name' },
+                { data: 'age' },
+                { data: 'gender' },
+                { data: 'eyeColor' },
+                { data: 'phone' },
+                { data: 'email' },
+                { data: 'company' },
+                { data: 'isActive' }
+            ],
+        });
+
+        $('#btnSearch').click(() => {
+            table.search($('#txtSearch').val()).draw();
+        });
+
+        $('#ddlLengthMenu').on('change', () => {
+            console.log($('#ddlLengthMenu').val());
+            table.page.len($('#ddlLengthMenu').val()).draw();
+        });
+
+        $('#filterForm').submit((e) => {
+            table.search($('#txtSearch').val()).draw();
+            console.log(e);
+        });
+    });
+</script>
+

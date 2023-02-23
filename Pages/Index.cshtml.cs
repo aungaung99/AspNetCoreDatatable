@@ -7,7 +7,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace AspNetCoreDatatablePagination.Pages
+namespace AspNetCoreDatatable.Pages
 {
     public class IndexModel : PageModel
     {

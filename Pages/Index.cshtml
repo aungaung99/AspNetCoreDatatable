@@ -4,55 +4,69 @@
     ViewData["Title"] = "Home page";
 }
 
-<link href="~/datatables/css/dataTables.bootstrap4.min.css" rel="stylesheet" />
-
-<div class="card">
-    <div class="card-header bg-white">
-        <div class="card-title mb-0">
-            <h5 class="mb-0">
-                JQuery Datatable pagination
-            </h5>
-        </div>
-    </div>
+<div class="card  mb-3">
     <div class="card-body">
-        <table id="example" class="table table-striped table-bordered rounded" style="width:100%;border-radius:10px">
-            <thead>
-                <tr>
-                    <th>Id</th>
-                    <th>Name (EN)</th>
-                    <th>Name (MM)</th>
-                    <th>Lat</th>
-                    <th>Long</th>
-                </tr>
-            </thead>
-            <tfoot>
-                <tr>
-                    <th>Id</th>
-                    <th>Name (EN)</th>
-                    <th>Name (MM)</th>
-                    <th>Lat</th>
-                    <th>Long</th>
-                </tr>
-            </tfoot>
-        </table>
+        <h5>jQuery Datatable AJAX with ASP.Net Core API Integration</h5>
+        <p>Customize Datatable feature</p>
+        <a class="btn btn-primary" href="https://datatables.net/">Read Documentation</a>
     </div>
 </div>
-<script src="~/lib/jquery/dist/jquery.min.js"></script>
-<script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
-<script src="~/datatables/js/jquery.dataTables.min.js"></script>
-<script src="~/datatables/js/dataTables.bootstrap4.min.js"></script>
-<script src="~/js/site.js" asp-append-version="true"></script>
-<script>
-    $(document).ready(function () {
-        $('#example').DataTable({
-            ajax: '/api/datatables',
-            columns: [
-                { data: 'streetId' },
-                { data: 'streetName' },
-                { data: 'streetNameMm' },
-                { data: 'lat' },
-                { data: 'long' },
-            ],
-        });
-    });
-</script>
+<div class="row d-flex justify-content-center">
+    <div class="col-6 mb-3">
+        <div class="card ">
+            <div class="card-body">
+                <h5>Basic Datatable with API</h5>
+                <p>
+                    jQuery Ajax API calling with GET method to get all data in one request.
+                    Without using linq Query and select all data.
+                </p>
+                <a asp-page="Basic" class="btn btn-sm btn-info">Learn More</a>
+            </div>
+        </div>
+    </div>
+    <div class="col-6 mb-3">
+        <div class="card ">
+            <div class="card-body">
+                <h5>Pagination with API</h5>
+                <p>
+                    jQuery Ajax Server Side API calling with POST method to get data by page.
+                    Using linq Query take and skip method.
+                </p>
+                <a asp-page="Pagination" class="btn btn-sm btn-info">Learn More</a>
+            </div>
+        </div>
+    </div>
+    <div class="col-6 mb-3">
+        <div class="card ">
+            <div class="card-body">
+                <h5>Custom Search UI with  API</h5>
+                <p>
+                    jQuery Ajax Server Side calling POST API and draw with search value
+                </p>
+                <a asp-page="Searching" class="btn btn-sm btn-info">Learn More</a>
+            </div>
+        </div>
+    </div>
+    <div class="col-6 mb-3">
+        <div class="card ">
+            <div class="card-body">
+                <h5>Ordering with  API</h5>
+                <p>
+                    jQuery Ajax Server Side calling POST API and ordering by column
+                </p>
+                <a asp-page="Ordering" class="btn btn-sm btn-info">Learn More</a>
+            </div>
+        </div>
+    </div>
+    <div class="col-8 mb-3">
+        <div class="card ">
+            <div class="card-body">
+                <h5>All In One Setup</h5>
+                <p>
+                    jQuery Ajax Server Side calling POST API. Included pagination, ordering, searching and custom ui. 
+                </p>
+                <a asp-page="AIO" class="btn btn-sm btn-info">Learn More</a>
+            </div>
+        </div>
+    </div>
+</div>

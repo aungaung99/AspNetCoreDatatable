@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore;
 
 #nullable disable
 
-namespace AspNetCoreDatatablePagination.Entities
+namespace AspNetCoreDatatable.Entities
 {
     [Table("Street")]
     public partial class Street

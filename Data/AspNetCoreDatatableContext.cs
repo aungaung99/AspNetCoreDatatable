@@ -1,11 +1,11 @@
 ﻿using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata;
-using AspNetCoreDatatablePagination.Entities;
+using AspNetCoreDatatable.Entities;
 
 #nullable disable
 
-namespace AspNetCoreDatatablePagination.Data
+namespace AspNetCoreDatatable.Data
 {
     public partial class AspNetCoreDatatableContext : DbContext
     {
@@ -19,6 +19,7 @@ namespace AspNetCoreDatatablePagination.Data
         }
 
         public virtual DbSet<Street> Streets { get; set; }
+        public virtual DbSet<UserInfo> UserInfos { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
