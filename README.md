@@ -92,18 +92,42 @@ public async Task<IActionResult> OnPostAsync()
 
 ![image](https://user-images.githubusercontent.com/57518163/220998049-f5cb3ac5-ef9d-4414-8d5e-22dc942f3d4b.png)
 
+##### Customizing UI with dom of datatable option
+
+```javascript
+  $('#example').DataTable({
+       ajax: {
+           url: '/api/...',
+           type: 'POST',
+           dataType: 'JSON',
+       },
+       processing: true,
+       serverSide: true,
+       dom: "<'row'<'col-sm-12'tr>>" +
+                "<'row d-flex justify-content-between'<'col-auto'p><'col-auto float-end mt-2'l>>",
+       columns: [
+           { name: 'UserId', data: 'userId' },
+           { name: 'Name', data: 'name' }
+       ]
+});
+```
+
+![image](https://user-images.githubusercontent.com/57518163/220998948-91dc10b3-1703-4912-a929-5eaa4ffdb41f.png)
+
 Response JSON Value
 ```json
-[
-    { 
-      "userId" : "001",
-      "name"   : "Mg Mg",
-    },
-     { 
-      "userId" : "002",
-      "name"   : "Ag Ag",
-    },
-]
+{  
+  data : [
+            { 
+              "userId" : "001",
+              "name"   : "Mg Mg",
+            },
+             { 
+              "userId" : "002",
+              "name"   : "Ag Ag",
+            }
+         ]
+}
 ```
 
 
