@@ -48,7 +48,7 @@ public async Task<IActionResult> OnPostAsync()
     int pageSize = length != null ? Convert.ToInt32(length) : 0; 
     int skip = start != null ? Convert.ToInt32(start) : 0; 
     int recordsTotal = 0;
-    ...
+    https://github.com/aungaung99/AspNetCoreDatatable/blob/79de708e6409e6453d750e66a1e0c042004af9d5/Controllers/DatatablesController.cs#L48
 }
 ```
 
