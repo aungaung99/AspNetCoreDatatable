@@ -32,10 +32,25 @@ Datatables sort / order by linq query orderby & orderbydescending method
 
 ### Request Form Control from jQuery Datatable Ajax Server side Process
 
-https://github.com/aungaung99/AspNetCoreDatatable/blob/ce18778bd53967c27eb82da3343535b39a1a49e8/Controllers/DatatablesController.cs#L113-L121
+```cs
+[HttpPost]
+public async Task<IActionResult> OnPostAsync()
+{
+    string draw = Request.Form["draw"].FirstOrDefault(); 
+    string start = Request.Form["start"].FirstOrDefault(); 
+    string length = Request.Form["length"].FirstOrDefault(); 
+    string sortColumn = Request.Form["columns[" + Request.Form["order[0][column]"].FirstOrDefault() + "][name]"].FirstOrDefault(); 
+    string sortColumnDirection = Request.Form["order[0][dir]"].FirstOrDefault(); 
+    string searchValue = Request.Form["search[value]"].FirstOrDefault(); 
+    int pageSize = length != null ? Convert.ToInt32(length) : 0; 
+    int skip = start != null ? Convert.ToInt32(start) : 0; 
+    int recordsTotal = 0;
+    ...
+}
+```
 
 ### jQuery Ajax Server Side Ajax Request
-##### This script is only work for pagination and searching. Data ordering doesn't work propably.
+##### This script is only work for pagination and searching but data ordering doesn't work propably.
 
 ```javascript
   $('#example').DataTable({
@@ -47,7 +62,8 @@ https://github.com/aungaung99/AspNetCoreDatatable/blob/ce18778bd53967c27eb82da33
        processing: true,
        serverSide: true,
        columns: [
-           { data: 'colName' }
+           { data: 'userId' },
+           { data: 'name' }
        ]
 });
 ```
@@ -63,7 +79,8 @@ https://github.com/aungaung99/AspNetCoreDatatable/blob/ce18778bd53967c27eb82da33
        processing: true,
        serverSide: true,
        columns: [
-           { name: 'StreetId', data: 'streetId' }
+           { name: 'UserId', data: 'userId' },
+           { name: 'Name', data: 'name' }
        ]
 });
 ```
@@ -71,7 +88,14 @@ https://github.com/aungaung99/AspNetCoreDatatable/blob/ce18778bd53967c27eb82da33
 Response JSON Value
 ```json
 [
-    { "streetId" : "100" } 
+    { 
+      "userId" : "001",
+      "name"   : "Mg Mg",
+    },
+     { 
+      "userId" : "002",
+      "name"   : "Ag Ag",
+    },
 ]
 ```
 
