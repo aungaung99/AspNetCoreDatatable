@@ -117,16 +117,17 @@ public async Task<IActionResult> OnPostAsync()
 Response JSON Value
 ```json
 {  
-  data : [
-            { 
-              "userId" : "001",
-              "name"   : "Mg Mg",
-            },
-             { 
-              "userId" : "002",
-              "name"   : "Ag Ag",
-            }
-         ]
+  "data" : 
+  [
+     { 
+       "userId" : "001",
+       "name"   : "Mg Mg",
+     },
+      { 
+       "userId" : "002",
+       "name"   : "Ag Ag",
+     }
+   ]
 }
 ```
 
