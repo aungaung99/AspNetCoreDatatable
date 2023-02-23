@@ -67,6 +67,8 @@ public async Task<IActionResult> OnPostAsync()
        ]
 });
 ```
+![image](https://user-images.githubusercontent.com/57518163/220983553-e4f57825-b860-4653-b34f-823fdfbb5141.png)
+
 ##### So we need to add the column name in this script.
 
 ```javascript
