@@ -2,9 +2,12 @@
  Datatable Pagination with API
  This is the jQuery Datatable Custom UI and Custom Mode. Including pagination, searching and ordering.
  Querying the 13,000 rows from MSSQL Server with linq query.
- 
+
  ![image](https://user-images.githubusercontent.com/57518163/220984421-6d5705a2-c0aa-41ca-abd4-846f0f0f0fc8.png)
- 
+
+## MSSQL Database
+Download and restore the database backup file. Named as AspNetCore_Datatable [Download here](https://github.com/aungaung99/AspNetCoreDatatable/blob/main/aspnetcore_datatable.bak)
+
 ## API Reference
 
 #### Get basic datatables request
